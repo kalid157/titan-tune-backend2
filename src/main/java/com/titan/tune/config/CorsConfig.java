@@ -1,3 +1,14 @@
+package com.titan.tune.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
 @Configuration
 public class CorsConfig {
 
@@ -8,7 +19,6 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Si on a mis "*", on autorise tout, sinon on sépare par des virgules
         if ("*".equals(allowedOrigins)) {
             configuration.setAllowedOriginPatterns(List.of("*"));
         } else {
