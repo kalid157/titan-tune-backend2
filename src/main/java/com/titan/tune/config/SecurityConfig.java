@@ -28,7 +28,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 // Routes publiques
-                .requestMatchers("/user/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/user/**", "/health","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/albums/**", "/song/**").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/favoris/stats/**").permitAll()
                 // Tout le reste nécessite une authentification (JWT)
