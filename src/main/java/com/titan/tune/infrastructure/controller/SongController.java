@@ -1,44 +1,68 @@
 package com.titan.tune.infrastructure.controller;
 
-import com.titan.tune.application.dto.song.SongDTO;
-import com.titan.tune.domain.service.SongService;
+import com.titan.tune.application.dto.song.CreateSongRequest;
+import com.titan.tune.domain.model.Song;
+import com.titan.tune.domain.repository.SongRepository;
+import com.titan.tune.domain.service.MinioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/song")
 @RequiredArgsConstructor
 public class SongController {
-    private final SongService songService;
+    private final SongRepository songRepository;
+    private final MinioService minioService;
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<SongDTO>> getAllSongs() {
-        return ResponseEntity.ok(songService.getAllSongs());
+    @PostMapping("/create")
+    public ResponseEntity<Song> create(@Valid @RequestBody CreateSongRequest request) {
+        Song song = Song.builder()
+                .trackingId(UUID.randomUUID().toString())
+                .titre(request.titre())
+                .audio(request.audio())
+                .albumTrackingId(request.albumTrackingId())
+                .categorieTrackingId(request.categorieTrackingId())
+                .build();
+        return ResponseEntity.ok(songRepository.save(song));
     }
 
-    @GetMapping("/getByAlbum/{albumId}")
-    public ResponseEntity<List<SongDTO>> getByAlbum(@PathVariable String albumId) {
-        return ResponseEntity.ok(songService.getSongsByAlbum(albumId));
+    @PostMapping("/upload")
+    public ResponseEntity<Song> upload(
+            @RequestParam("titre") String titre,
+            @RequestParam("albumTrackingId") String albumTrackingId,
+            @RequestParam(value = "categorieTrackingId", required = false) String categorieTrackingId,
+            @RequestParam("audio") MultipartFile audio) {
+
+        String audioUrl = minioService.uploadFile(audio);
+
+        Song song = Song.builder()
+                .trackingId(UUID.randomUUID().toString())
+                .titre(titre)
+                .audio(audioUrl)
+                .albumTrackingId(albumTrackingId)
+                .categorieTrackingId(categorieTrackingId)
+                .build();
+        return ResponseEntity.ok(songRepository.save(song));
     }
 
-    @GetMapping("/getAllForOne/{artisteId}")
-    public ResponseEntity<List<SongDTO>> getByArtiste(@PathVariable String artisteId) {
-        return ResponseEntity.ok(songService.getSongsByArtiste(artisteId));
+    @GetMapping("/getByAlbum/{trackingIdAlbum}")
+    public ResponseEntity<List<Song>> getByAlbum(@PathVariable String trackingIdAlbum) {
+        return ResponseEntity.ok(songRepository.findByAlbumTrackingId(trackingIdAlbum));
     }
 
-     // NOUVEAUX ENDPOINTS
-    @GetMapping("/get/{trackingIdSong}")
-    public ResponseEntity<SongDTO> getSongById(@PathVariable String trackingIdSong) {
-        return ResponseEntity.ok(songService.getSongById(trackingIdSong));
+    @GetMapping("/getAllForOne/{trackingIdArtiste}")
+    public ResponseEntity<List<Song>> getByArtiste(@PathVariable String trackingIdArtiste) {
+        return ResponseEntity.ok(songRepository.findByArtisteTrackingId(trackingIdArtiste));
     }
-
-    @DeleteMapping("/delete/{trackingIdSong}")
-    public ResponseEntity<Void> deleteSong(@PathVariable String trackingIdSong) {
-        // NOTE: Si tu utilises MinIO, c'est ici que tu appelleras MinIO pour supprimer le fichier audio
-        songService.deleteSong(trackingIdSong);
-        return ResponseEntity.ok().build();
+    
+    @GetMapping("/getByCategorieName/{category_name}")
+    public ResponseEntity<List<Song>> getByCategorieName(@PathVariable String category_name) {
+        return ResponseEntity.ok(songRepository.findByCategorieName(category_name));
     }
 }

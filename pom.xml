@@ -66,6 +66,12 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
+        //minio dependency
+         <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.9</version>
+        </dependency>
         <!-- Migrations & Swagger -->
         <dependency>
             <groupId>org.flywaydb</groupId>
