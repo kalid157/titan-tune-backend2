@@ -22,14 +22,14 @@ public class User implements UserDetails {
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    private String password; //  Assure-toi que ce champ s'appelle bien "password"
 
     private String firstName;
     private String lastName;
-    // NOUVEAUX CHAMPS POUR LES ARTISTES
     private String alias;
     @Column(length = 1000)
     private String description;
+
     private String phone;
     private String avatarUrl;
     private Boolean isPremium;
@@ -46,21 +46,18 @@ public class User implements UserDetails {
         if (role == null) role = "USER";
     }
 
-    // --- Spring Security ---
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role));
     }
-
-    @Override
-    public String getUsername() { return email; }
-
-    @Override
-    public boolean isAccountNonExpired() { return true; }
-    @Override
-    public boolean isAccountNonLocked() { return true; }
-    @Override
-    public boolean isCredentialsNonExpired() { return true; }
-    @Override
-    public boolean isEnabled() { return true; }
+    
+    @Override public String getUsername() { return email; }
+    
+    //  On force la méthode ici pour éviter le conflit avec UserDetails
+    @Override public String getPassword() { return password; } 
+    
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return true; }
 }
