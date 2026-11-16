@@ -1,30 +1,37 @@
 package com.titan.tune.config;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 public class CorsConfig {
 
-    @Value("${cors.allowed-origins}")
-    private List<String> allowedOrigins;
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(allowedOrigins);
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+        CorsConfiguration configuration = new CorsConfiguration();
+        
+        //  On autorise toutes les origines (très important pour Render/Swagger)
+        configuration.setAllowedOriginPatterns(List.of("*")); 
+        
+        //  On autorise toutes les méthodes HTTP
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        
+        //  On autorise tous les headers
+        configuration.setAllowedHeaders(List.of("*"));
+        
+        // Autoriser les credentials (cookies, authorization headers)
+        configuration.setAllowCredentials(true);
+        
+        // Temps de cache pour la réponse préflight (en secondes)
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

@@ -63,7 +63,9 @@ public class AlbumController {
 
     @GetMapping("/get/{trackingId}")
     public ResponseEntity<Album> getById(@PathVariable String trackingId) {
-        return ResponseEntity.ok(albumRepository.findById(trackingId).orElseThrow());
+         Album album = albumRepository.findById(trackingId)
+                .orElseThrow(() -> new com.titan.tune.common.exception.ResourceNotFoundException("Album introuvable avec l'ID : " + trackingId));
+        return ResponseEntity.ok(album);
     }
 
     @DeleteMapping("/delete/{trackingId}")
