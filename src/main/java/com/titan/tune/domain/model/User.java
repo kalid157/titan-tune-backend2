@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(nullable = false)
-    private String password; //  Assure-toi que ce champ s'appelle bien "password"
+    private String password; // toi que ce champ s'appelle bien "password"
 
     private String firstName;
     private String lastName;
