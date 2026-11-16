@@ -28,4 +28,17 @@ public class SongController {
     public ResponseEntity<List<SongDTO>> getByArtiste(@PathVariable String artisteId) {
         return ResponseEntity.ok(songService.getSongsByArtiste(artisteId));
     }
+
+     // NOUVEAUX ENDPOINTS
+    @GetMapping("/get/{trackingIdSong}")
+    public ResponseEntity<SongDTO> getSongById(@PathVariable String trackingIdSong) {
+        return ResponseEntity.ok(songService.getSongById(trackingIdSong));
+    }
+
+    @DeleteMapping("/delete/{trackingIdSong}")
+    public ResponseEntity<Void> deleteSong(@PathVariable String trackingIdSong) {
+        // NOTE: Si tu utilises MinIO, c'est ici que tu appelleras MinIO pour supprimer le fichier audio
+        songService.deleteSong(trackingIdSong);
+        return ResponseEntity.ok().build();
+    }
 }

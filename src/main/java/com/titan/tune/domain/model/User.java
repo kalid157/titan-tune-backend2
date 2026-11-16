@@ -26,6 +26,10 @@ public class User implements UserDetails {
 
     private String firstName;
     private String lastName;
+    // NOUVEAUX CHAMPS POUR LES ARTISTES
+    private String alias;
+    @Column(length = 1000)
+    private String description;
     private String phone;
     private String avatarUrl;
     private Boolean isPremium;
