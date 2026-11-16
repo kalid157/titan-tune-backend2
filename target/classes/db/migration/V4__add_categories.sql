@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS categories (
+    tracking_id VARCHAR(36) PRIMARY KEY,
+    nom_categorie VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);

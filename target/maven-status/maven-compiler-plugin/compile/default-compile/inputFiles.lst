@@ -1,15 +1,18 @@
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/TitanTuneApplication.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/album/AlbumDTO.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/album/CreateAlbumRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/album/UpdateAlbumAccessRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/ArtistResponse.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/AuthResponse.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/LoginRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/RegisterArtistRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/RegisterRequest.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/category/CategoryRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/favorite/FavoriteRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/playlist/AddSongRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/playlist/CreatePlaylistRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/playlist/PlaylistDTO.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/song/CreateSongRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/song/SongDTO.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/mapper/AlbumMapper.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/mapper/PlaylistMapper.java
@@ -20,9 +23,11 @@
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/common/exception/ResourceNotFoundException.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/config/CorsConfig.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/config/JwtConfig.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/config/MinioConfig.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/config/SecurityConfig.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/config/SwaggerConfig.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/model/Album.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/model/Category.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/model/Favorite.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/model/Playlist.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/model/Song.java
@@ -30,6 +35,7 @@
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/model/Suivre.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/model/User.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/repository/AlbumRepository.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/repository/CategoryRepository.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/repository/FavoriteRepository.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/repository/PlaylistRepository.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/repository/SongEcouterRepository.java
@@ -38,7 +44,9 @@
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/repository/UserRepository.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/AlbumService.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/AuthService.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/CategoryService.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/FavoriteService.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/MinioService.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/PlaylistService.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/SongEcouterService.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/SongService.java
@@ -46,6 +54,7 @@
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/domain/service/UserService.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/AlbumController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/AuthController.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/CategoryController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/FavoriteController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/HealthController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/PlaylistController.java
