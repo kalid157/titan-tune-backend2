@@ -36,4 +36,10 @@ public class AuthController {
     public ResponseEntity<List<ArtistResponse>> getAllArtists() {
         return ResponseEntity.ok(userService.getAllArtists());
     }
+
+    // NOUVEL ENDPOINT : Récupérer tous les clients
+    @GetMapping("/allClient")
+    public ResponseEntity<List<ClientResponse>> getAllClients() {
+        return ResponseEntity.ok(userService.getAllClients());
+    }
 }

@@ -21,24 +21,24 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SongController {
     private final SongRepository songRepository;
-    private final AlbumRepository albumRepository; // ⭐ Injection ajoutée
+    private final AlbumRepository albumRepository; // Injection ajoutée
     private final MinioService minioService;
 
     @PostMapping("/create")
     public ResponseEntity<Song> create(@Valid @RequestBody CreateSongRequest request) {
-        // ⭐ 1. On cherche l'album pour récupérer les infos de l'artiste
+        // 1. On cherche l'album pour récupérer les infos de l'artiste
         Album album = albumRepository.findById(request.albumTrackingId())
                 .orElseThrow(() -> new ResourceNotFoundException("Album introuvable avec l'ID : " + request.albumTrackingId()));
 
-        // ⭐ 2. On crée la chanson en remplissant TOUS les champs obligatoires
+        //  2. On crée la chanson en remplissant TOUS les champs obligatoires
         Song song = Song.builder()
                 .trackingId(UUID.randomUUID().toString())
                 .titre(request.titre())
                 .audio(request.audio())
                 .albumTrackingId(request.albumTrackingId())
                 .categorieTrackingId(request.categorieTrackingId())
-                .artiste(album.getNomArtiste()) // ⭐ Rempli automatiquement
-                .artisteTrackingId(album.getArtisteTrackingId()) // ⭐ Rempli automatiquement
+                .artiste(album.getNomArtiste()) // Rempli automatiquement
+                .artisteTrackingId(album.getArtisteTrackingId()) // Rempli automatiquement
                 .build();
                 
         return ResponseEntity.ok(songRepository.save(song));
@@ -51,7 +51,7 @@ public class SongController {
             @RequestParam(value = "categorieTrackingId", required = false) String categorieTrackingId,
             @RequestParam("audio") MultipartFile audio) {
 
-        // ⭐ Même logique pour l'upload
+        // Même logique pour l'upload
         Album album = albumRepository.findById(albumTrackingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Album introuvable avec l'ID : " + albumTrackingId));
 
@@ -63,8 +63,8 @@ public class SongController {
                 .audio(audioUrl)
                 .albumTrackingId(albumTrackingId)
                 .categorieTrackingId(categorieTrackingId)
-                .artiste(album.getNomArtiste()) // ⭐ Rempli automatiquement
-                .artisteTrackingId(album.getArtisteTrackingId()) // ⭐ Rempli automatiquement
+                .artiste(album.getNomArtiste()) //  Rempli automatiquement
+                .artisteTrackingId(album.getArtisteTrackingId()) // Rempli automatiquement
                 .build();
                 
         return ResponseEntity.ok(songRepository.save(song));

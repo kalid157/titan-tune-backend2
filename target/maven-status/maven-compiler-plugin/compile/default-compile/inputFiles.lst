@@ -4,6 +4,7 @@
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/album/UpdateAlbumAccessRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/ArtistResponse.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/AuthResponse.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/ClientResponse.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/LoginRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/RegisterArtistRequest.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/application/dto/auth/RegisterRequest.java

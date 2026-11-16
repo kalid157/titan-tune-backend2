@@ -47,4 +47,13 @@ public class SuivreService {
                 .map(Suivre::getTrackingIdFollowing)
                 .collect(Collectors.toList());
     }
+
+    //  NOUVELLES MÉTHODES : Compteurs
+    public long getFollowersCount(String artisteId) {
+        return suivreRepository.countByTrackingIdFollowing(artisteId);
+    }
+
+    public long getFollowingsCount(String clientId) {
+        return suivreRepository.countByTrackingIdFollower(clientId);
+    }
 }

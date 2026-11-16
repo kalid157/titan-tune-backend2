@@ -1,6 +1,7 @@
 package com.titan.tune.domain.service;
 
 import com.titan.tune.application.dto.auth.ArtistResponse;
+import com.titan.tune.application.dto.auth.ClientResponse;
 import com.titan.tune.application.dto.auth.RegisterArtistRequest;
 import com.titan.tune.common.exception.BusinessException;
 import com.titan.tune.domain.model.User;
@@ -18,6 +19,18 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    
+    public List<ClientResponse> getAllClients() {
+        return userRepository.findByRole("USER").stream()
+                .map(user -> new ClientResponse(
+                        user.getTrackingId(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail(),
+                        user.getPhone()
+                ))
+                .collect(Collectors.toList());
+    }
 
     public ArtistResponse registerArtist(RegisterArtistRequest request) {
         if (userRepository.existsByEmail(request.email())) {
