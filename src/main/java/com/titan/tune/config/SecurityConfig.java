@@ -33,14 +33,28 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Preflight CORS
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                
                 // Health check Render
                 .requestMatchers("/actuator/health", "/actuator/health/**", "/health").permitAll()
-                // Routes publiques
+                
+                // Routes publiques d'authentification et Swagger
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                
+                // ⭐ NOUVELLES ROUTES AJOUTÉES ICI POUR TES TESTS
+                .requestMatchers("/categories/**").permitAll()
+                .requestMatchers("/suivre/**").permitAll()
+                .requestMatchers("/songEcouter/**").permitAll()
+                .requestMatchers("/albums/upload").permitAll() // Pour tester l'upload sans token
+                .requestMatchers("/song/upload").permitAll()   // Pour tester l'upload sans token
+
+                // Routes en lecture
                 .requestMatchers(HttpMethod.GET, "/albums/**", "/song/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/favoris/stats/**").permitAll()
+                
+                // Routes sécurisées
                 .requestMatchers(HttpMethod.DELETE, "/song/**").hasAnyRole("ARTIST", "ADMIN")
+                
                 // Tout le reste nécessite un JWT
                 .anyRequest().authenticated()
             )
