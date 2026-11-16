@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 
-                // ⭐ NOUVELLES ROUTES AJOUTÉES ICI POUR TES TESTS
+                //  NOUVELLES ROUTES AJOUTÉES ICI POUR TES TESTS
                 .requestMatchers("/categories/**").permitAll()
                 .requestMatchers("/suivre/**").permitAll()
                 .requestMatchers("/songEcouter/**").permitAll()
@@ -50,6 +50,7 @@ public class SecurityConfig {
 
                 // Routes en lecture
                 .requestMatchers(HttpMethod.GET, "/albums/**", "/song/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/albums/create", "/albums/upload").permit
                 .requestMatchers(HttpMethod.GET, "/favoris/stats/**").permitAll()
                 
                 // Routes sécurisées
