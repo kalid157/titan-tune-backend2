@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.GET, "/albums/**", "/song/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/favoris/stats/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/song/**").hasAnyRole("ARTIST", "ADMIN")
                 // Tout le reste nécessite un JWT
                 .anyRequest().authenticated()
             )

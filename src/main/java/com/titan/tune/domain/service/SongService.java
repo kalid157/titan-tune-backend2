@@ -2,9 +2,12 @@ package com.titan.tune.domain.service;
 
 import com.titan.tune.application.dto.song.SongDTO;
 import com.titan.tune.application.mapper.SongMapper;
+import com.titan.tune.common.exception.ResourceNotFoundException;
+import com.titan.tune.domain.model.Song;
 import com.titan.tune.domain.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +34,19 @@ public class SongService {
         return songRepository.findByArtiste(artisteId).stream()
                 .map(songMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public SongDTO getSongById(String trackingId) {
+        Song song = songRepository.findById(trackingId)
+                .orElseThrow(() -> new ResourceNotFoundException("Chanson introuvable : " + trackingId));
+        return songMapper.toDto(song);
+    }
+
+    @Transactional
+    public void deleteSong(String trackingId) {
+        if (!songRepository.existsById(trackingId)) {
+            throw new ResourceNotFoundException("Chanson introuvable : " + trackingId);
+        }
+        songRepository.deleteById(trackingId);
     }
 }
