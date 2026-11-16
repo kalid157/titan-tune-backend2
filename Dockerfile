@@ -35,4 +35,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # Commande pour démarrer l'application
-ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-XX:+UseSerialGC", "-XX:TieredStopAtLevel=1", "-Xshare:auto", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:TieredStopAtLevel=1", "-Xss512k", "-Dspring.main.lazy-initialization=true", "-jar", "app.jar"]
