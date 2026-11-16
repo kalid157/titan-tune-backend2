@@ -41,16 +41,17 @@ public class SecurityConfig {
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 
-                //  NOUVELLES ROUTES AJOUTÉES ICI POUR TES TESTS
+                // Routes ajoutées pour tes tests (Catégories, Suivre, etc.)
                 .requestMatchers("/categories/**").permitAll()
                 .requestMatchers("/suivre/**").permitAll()
                 .requestMatchers("/songEcouter/**").permitAll()
-                .requestMatchers("/albums/upload").permitAll() // Pour tester l'upload sans token
-                .requestMatchers("/song/upload").permitAll()   // Pour tester l'upload sans token
+                
+                // ⭐ LIGNES CORRIGÉES ICI : utilisation de .permitAll() avec parenthèses
+                .requestMatchers(HttpMethod.POST, "/albums/create", "/albums/upload").permitAll()
+                .requestMatchers(HttpMethod.POST, "/song/create", "/song/upload").permitAll()
 
                 // Routes en lecture
                 .requestMatchers(HttpMethod.GET, "/albums/**", "/song/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/albums/create", "/albums/upload").permit
                 .requestMatchers(HttpMethod.GET, "/favoris/stats/**").permitAll()
                 
                 // Routes sécurisées
