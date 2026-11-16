@@ -6,16 +6,17 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "songs")
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data @NoArgsConstructor @AllArgsConstructor @Builder //  @Builder est indispensable ici
 public class Song {
     @Id
     @Column(name = "tracking_id")
     private String trackingId;
+    
     private String titre;
     private String audio;
     private String artiste;
-    private String albumTrackingId;
     private String artisteTrackingId;
+    private String albumTrackingId;
     private String categorieTrackingId;
     private Integer durationSeconds;
     private Boolean isVip;
