@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/favoris/stats/**").permitAll()
                 
                 // Routes sécurisées
-                .requestMatchers(HttpMethod.DELETE, "/song/**").hasAnyRole("ARTIST", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/song/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/albums/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/categories/**").permitAll()
                 
