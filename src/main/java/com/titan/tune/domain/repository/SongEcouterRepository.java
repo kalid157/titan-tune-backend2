@@ -9,4 +9,6 @@ import java.util.List;
 public interface SongEcouterRepository extends JpaRepository<SongEcouter, String> {
     @Query("SELECT s FROM SongEcouter s JOIN Song song ON s.songTrackingId = song.trackingId WHERE LOWER(song.titre) LIKE LOWER(CONCAT('%', :title, '%'))")
     List<SongEcouter> searchBySongTitle(@Param("title") String title);
+    
+    List<SongEcouter> findByUserTrackingIdOrderByListenedAtDesc(String userId);
 }

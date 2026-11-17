@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/health", "/actuator/health/**", "/health").permitAll()
                 
                 // Routes publiques d'authentification et Swagger
-                .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/user/**", "/auth/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 
                 // Routes ajoutées pour tes tests (Catégories, Suivre, etc.)
@@ -46,12 +46,14 @@ public class SecurityConfig {
                 .requestMatchers("/suivre/**").permitAll()
                 .requestMatchers("/songEcouter/**").permitAll()
                 
-                // ⭐ LIGNES CORRIGÉES ICI : utilisation de .permitAll() avec parenthèses
+                
+                
+                //  LIGNES CORRIGÉES ICI : utilisation de .permitAll() avec parenthèses
                 .requestMatchers(HttpMethod.POST, "/albums/create", "/albums/upload").permitAll()
                 .requestMatchers(HttpMethod.POST, "/song/create", "/song/upload").permitAll()
 
                 // Routes en lecture
-                .requestMatchers(HttpMethod.GET, "/albums/**", "/song/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/albums/**", "/song/**", "/playlist/**", "/categories/**", "/stats/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/favoris/stats/**").permitAll()
                 
                 // Routes sécurisées

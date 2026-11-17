@@ -58,6 +58,7 @@
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/CategoryController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/FavoriteController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/HealthController.java
+/home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/PaymentController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/PlaylistController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/SongController.java
 /home/sabr/Desktop/titan-tune-backend/src/main/java/com/titan/tune/infrastructure/controller/SongEcouterController.java

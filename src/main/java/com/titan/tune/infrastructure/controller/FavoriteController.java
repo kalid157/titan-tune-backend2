@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/favoris")
+@RequestMapping("/stats")
 @RequiredArgsConstructor
 public class FavoriteController {
     private final FavoriteService favoriteService;
@@ -36,5 +37,13 @@ public class FavoriteController {
     @GetMapping("/stats/nbrLikeForOneSong/{songId}")
     public ResponseEntity<Long> getLikeCount(@PathVariable String songId) {
         return ResponseEntity.ok(favoriteService.getSongLikeCount(songId));
+    }
+}
+public class StatsController {
+    private final FavoriteService favoriteService;
+
+    @GetMapping("/nbrLikeForOneSong/{songTrackingId}")
+    public ResponseEntity<Long> getSongLikeCount(@PathVariable String songTrackingId) {
+        return ResponseEntity.ok(favoriteService.getSongLikeCount(songTrackingId));
     }
 }

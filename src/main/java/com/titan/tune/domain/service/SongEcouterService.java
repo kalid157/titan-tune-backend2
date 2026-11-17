@@ -21,7 +21,10 @@ public class SongEcouterService {
                 .build();
         songEcouterRepository.save(ecouter);
     }
-
+    
+     public List<SongEcouter> getHistoryByUser(String userId) {
+        return songEcouterRepository.findByUserTrackingIdOrderByListenedAtDesc(userId);
+    }
     public List<SongEcouter> searchByTitle(String title) {
         return songEcouterRepository.searchBySongTitle(title);
     }
