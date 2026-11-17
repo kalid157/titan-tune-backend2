@@ -13,6 +13,8 @@ public class MinioConfig {
     private String accessKey;
     @Value("${minio.secret-key}")
     private String secretKey;
+    @Value("${minio.bucket}")    
+    private String bucket;
 
     @Bean
     public MinioClient minioClient() {
