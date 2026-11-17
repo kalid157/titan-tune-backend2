@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface SongRepository extends JpaRepository<Song, String> {
     List<Song> findByAlbumTrackingId(String albumId);
-    List<Song> findByArtiste(String artiste);
-    
+    List<Song> findByArtiste(String artiste);    
     //  MÉTHODE AJOUTÉE ICI
     List<Song> findByArtisteTrackingId(String artisteTrackingId);
+    List<Song> findTop10ByOrderByCreatedAtDesc();
 
     // Requête pour chercher les sons par le nom de la catégorie
     @Query("SELECT s FROM Song s JOIN Category c ON s.categorieTrackingId = c.trackingId WHERE LOWER(c.nomCategorie) = LOWER(:nomCategorie)")

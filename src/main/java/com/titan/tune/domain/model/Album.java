@@ -13,8 +13,6 @@ public class Album {
     private String trackingId;
     private String titreAlbum;
     private String nomArtiste;
-    
-    //  NOUVEAU CHAMP AJOUTÉ ICI
     private String artisteTrackingId; 
 
     private String imageAlbum;
