@@ -58,6 +58,8 @@ public class SecurityConfig {
                 
                 // Routes sécurisées
                 .requestMatchers(HttpMethod.DELETE, "/song/**").hasAnyRole("ARTIST", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/albums/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/categories/**").permitAll()
                 
                 // Tout le reste nécessite un JWT
                 .anyRequest().authenticated()
