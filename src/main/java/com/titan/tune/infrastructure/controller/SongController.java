@@ -113,6 +113,21 @@ public class SongController {
     }
 
     // ═══════════════════════════════════════════════════════════════
+    // --- SUPPRESSION ( NOUVEAU) ---
+    // ═══════════════════════════════════════════════════════════════
+    @DeleteMapping("/delete/{trackingIdSong}")
+    public ResponseEntity<Void> deleteSong(@PathVariable String trackingIdSong) {
+        if (!songRepository.existsById(trackingIdSong)) {
+            throw new ResourceNotFoundException("Chanson introuvable avec l'ID : " + trackingIdSong);
+        }
+        
+        // Optionnel : Si tu veux aussi supprimer le fichier audio de MinIO, c'est ici qu'il faudra le faire.
+        
+        songRepository.deleteById(trackingIdSong);
+        return ResponseEntity.noContent().build(); // Renvoie un 204 (Succès)
+    }
+
+    // ═══════════════════════════════════════════════════════════════
     // --- HISTORIQUE D'ÉCOUTE (HISTORY) ---
     // ═══════════════════════════════════════════════════════════════
 
