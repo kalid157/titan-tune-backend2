@@ -40,4 +40,9 @@ public class PlaylistController {
         playlistService.deletePlaylist(playlistId);
         return ResponseEntity.noContent().build();
     }
+    
+    @GetMapping("/allSongForOne/{id}")
+    public ResponseEntity<List<Song>> getSongsByPlaylist(@PathVariable String id) {
+        return ResponseEntity.ok(playlistService.getSongsByPlaylist(id));
+    }
 }

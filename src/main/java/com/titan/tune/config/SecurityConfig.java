@@ -51,6 +51,9 @@ public class SecurityConfig {
                 //  LIGNES CORRIGÉES ICI : utilisation de .permitAll() avec parenthèses
                 .requestMatchers(HttpMethod.POST, "/albums/create", "/albums/upload").permitAll()
                 .requestMatchers(HttpMethod.POST, "/song/create", "/song/upload").permitAll()
+                .requestMatchers("/playlist/**").permitAll() 
+                .requestMatchers(HttpMethod.POST, "/playlist/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/playlist/**").permitAll()
 
                 // Routes en lecture
                 .requestMatchers(HttpMethod.GET, "/albums/**", "/song/**", "/playlist/**", "/categories/**", "/stats/**").permitAll()

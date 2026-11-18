@@ -6,7 +6,9 @@ import com.titan.tune.application.mapper.PlaylistMapper;
 import com.titan.tune.common.exception.BusinessException;
 import com.titan.tune.common.exception.ResourceNotFoundException;
 import com.titan.tune.domain.model.Playlist;
+import com.titan.tune.domain.model.Song;
 import com.titan.tune.domain.repository.PlaylistRepository;
+import com.titan.tune.domain.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final PlaylistMapper playlistMapper;
+    private final SongRepository songRepository; // ⭐ Ajouté pour récupérer les chansons
 
     public List<PlaylistDTO> getAllPlaylists() {
         return playlistRepository.findAll().stream()
@@ -33,7 +36,7 @@ public class PlaylistService {
                 .titre(request.titre())
                 .imageUrl(request.imageUrl())
                 .clientTrackingId(clientId)
-                .songIds(new ArrayList<>())
+                .songIds(new ArrayList<>()) // Initialisation
                 .build();
         playlistRepository.save(playlist);
         return playlistMapper.toDto(playlist);
@@ -42,6 +45,12 @@ public class PlaylistService {
     public void addSong(String playlistId, String songId) {
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable"));
+        
+        // Sécurité au cas où songIds serait null en base
+        if (playlist.getSongIds() == null) {
+            playlist.setSongIds(new ArrayList<>());
+        }
+        
         if (playlist.getSongIds().contains(songId)) {
             throw new BusinessException("Chanson déjà dans la playlist.");
         }
@@ -54,5 +63,17 @@ public class PlaylistService {
             throw new ResourceNotFoundException("Playlist introuvable");
         }
         playlistRepository.deleteById(playlistId);
+    }
+
+    //  NOUVELLE MÉTHODE : Récupérer les chansons d'une playlist
+    public List<Song> getSongsByPlaylist(String playlistId) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable"));
+                
+        if (playlist.getSongIds() == null || playlist.getSongIds().isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        return songRepository.findAllById(playlist.getSongIds());
     }
 }
