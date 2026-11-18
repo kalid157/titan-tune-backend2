@@ -2,7 +2,8 @@ package com.titan.tune.infrastructure.controller;
 
 import com.titan.tune.application.dto.playlist.AddSongRequest;
 import com.titan.tune.application.dto.playlist.CreatePlaylistRequest;
-import com.titan.tune.domain.model.Song; // ⭐ L'IMPORT MANQUANT EST ICI
+import com.titan.tune.application.dto.playlist.PlaylistDTO; //  Import du DTO
+import com.titan.tune.domain.model.Song; //  Import de Song
 import com.titan.tune.domain.service.PlaylistService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,15 @@ public class PlaylistController {
     // --- LECTURE & CRÉATION ---
     // ═══════════════════════════════════════════════════════════════
 
+    // On utilise PlaylistDTO au lieu de Playlist
     @GetMapping("/all")
-    public ResponseEntity<List<com.titan.tune.domain.model.Playlist>> getAll() {
+    public ResponseEntity<List<PlaylistDTO>> getAll() {
         return ResponseEntity.ok(playlistService.getAllPlaylists());
     }
 
+    // On utilise PlaylistDTO au lieu de Playlist
     @PostMapping("/create/{clientId}")
-    public ResponseEntity<com.titan.tune.domain.model.Playlist> create(
+    public ResponseEntity<PlaylistDTO> create(
             @PathVariable String clientId,
             @Valid @RequestBody CreatePlaylistRequest request) {
         return ResponseEntity.ok(playlistService.createPlaylist(clientId, request));
@@ -43,7 +46,7 @@ public class PlaylistController {
         return ResponseEntity.ok().build();
     }
 
-    //  C'est cette méthode qui utilisait "Song" sans l'importer
+    // Cette méthode renvoie bien une liste de Song (Entité), d'où l'import
     @GetMapping("/allSongForOne/{id}")
     public ResponseEntity<List<Song>> getSongsByPlaylist(@PathVariable String id) {
         return ResponseEntity.ok(playlistService.getSongsByPlaylist(id));
