@@ -15,19 +15,23 @@ import java.util.stream.Collectors;
 public class SuivreService {
     private final SuivreRepository suivreRepository;
 
-    public void follow(String followerId, String artisteId) {
+    //  MODIFIÉ : Renvoie maintenant un objet Suivre au lieu de void
+    public Suivre follow(String followerId, String artisteId) {
         if (followerId.equals(artisteId)) {
             throw new BusinessException("Vous ne pouvez pas vous suivre vous-même.");
         }
         if (suivreRepository.findByTrackingIdFollowerAndTrackingIdFollowing(followerId, artisteId).isPresent()) {
             throw new BusinessException("Vous suivez déjà cet artiste.");
         }
+        
         Suivre suivre = Suivre.builder()
                 .trackingId(UUID.randomUUID().toString())
                 .trackingIdFollower(followerId)
                 .trackingIdFollowing(artisteId)
                 .build();
-        suivreRepository.save(suivre);
+                
+        //  On retourne l'objet sauvegardé
+        return suivreRepository.save(suivre);
     }
 
     public void unfollow(String followerId, String artisteId) {

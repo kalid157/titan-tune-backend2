@@ -1,5 +1,6 @@
 package com.titan.tune.infrastructure.controller;
 
+import com.titan.tune.domain.model.Suivre; // ⭐ Import ajouté
 import com.titan.tune.domain.service.SuivreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +13,17 @@ import java.util.List;
 public class SuivreController {
     private final SuivreService suivreService;
 
+    // ⭐ On change Void en Suivre
     @PostMapping("/follow/{trackingIdFollower}/{trackingIdArtiste}")
-    public ResponseEntity<Void> follow(
+    public ResponseEntity<Suivre> follow(
             @PathVariable String trackingIdFollower,
             @PathVariable String trackingIdArtiste) {
-        suivreService.follow(trackingIdFollower, trackingIdArtiste);
-        return ResponseEntity.ok().build();
+        // ⭐ On renvoie directement l'objet retourné par le service
+        Suivre suivre = suivreService.follow(trackingIdFollower, trackingIdArtiste);
+        return ResponseEntity.ok(suivre);
     }
 
-    // ⭐ Un seul unfollow en PUT
+    // Un seul unfollow en PUT (reste en Void car delete ne renvoie rien)
     @PutMapping("/unfollow/{trackingIdFollower}/{trackingIdArtiste}")
     public ResponseEntity<Void> unfollow(
             @PathVariable String trackingIdFollower,
