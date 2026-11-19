@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final PlaylistMapper playlistMapper;
-    private final SongRepository songRepository; // ⭐ Ajouté pour récupérer les chansons
+    private final SongRepository songRepository;
+
     @Transactional(readOnly = true)
     public List<PlaylistDTO> getAllPlaylists() {
         return playlistRepository.findAll().stream()
@@ -36,7 +37,7 @@ public class PlaylistService {
                 .titre(request.titre())
                 .imageUrl(request.imageUrl())
                 .clientTrackingId(clientId)
-                .songIds(new ArrayList<>()) // Initialisation
+                .songIds(new ArrayList<>()) 
                 .build();
         playlistRepository.save(playlist);
         return playlistMapper.toDto(playlist);
@@ -46,7 +47,6 @@ public class PlaylistService {
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable"));
         
-        // Sécurité au cas où songIds serait null en base
         if (playlist.getSongIds() == null) {
             playlist.setSongIds(new ArrayList<>());
         }
@@ -65,7 +65,7 @@ public class PlaylistService {
         playlistRepository.deleteById(playlistId);
     }
 
-    //  NOUVELLE MÉTHODE : Récupérer les chansons d'une playlist
+    @Transactional(readOnly = true)
     public List<Song> getSongsByPlaylist(String playlistId) {
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable"));
@@ -77,7 +77,9 @@ public class PlaylistService {
         return songRepository.findAllById(playlist.getSongIds());
     }
 
-        public PlaylistDTO getPlaylistById(String id) {
+    //  AJOUT DE @Transactional ICI
+    @Transactional(readOnly = true)
+    public PlaylistDTO getPlaylistById(String id) {
         Playlist playlist = playlistRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable"));
         return playlistMapper.toDto(playlist);

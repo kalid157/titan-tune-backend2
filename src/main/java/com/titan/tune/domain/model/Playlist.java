@@ -1,6 +1,6 @@
 package com.titan.tune.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore; // IMPORT AJOUTÉ
+import com.fasterxml.jackson.annotation.JsonIgnore; 
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "playlists")
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder //  Lombok annotations for boilerplate code
 public class Playlist {
     @Id
     @Column(name = "tracking_id")
@@ -20,7 +20,6 @@ public class Playlist {
     private String clientTrackingId;
     private LocalDateTime createdAt;
 
-    // AJOUT DE @JsonIgnore ICI
     @JsonIgnore 
     @ElementCollection
     @CollectionTable(name = "playlist_songs", joinColumns = @JoinColumn(name = "playlist_id"))
