@@ -45,13 +45,13 @@ public class SecurityConfig {
                 .requestMatchers("/categories/**").permitAll()
                 .requestMatchers("/suivre/**").permitAll()
                 .requestMatchers("/songEcouter/**").permitAll()
+                .requestMatchers("/playlist/**").permitAll() 
                 
                 
                 
                 //  LIGNES CORRIGÉES ICI : utilisation de .permitAll() avec parenthèses
                 .requestMatchers(HttpMethod.POST, "/albums/create", "/albums/upload").permitAll()
                 .requestMatchers(HttpMethod.POST, "/song/create", "/song/upload").permitAll()
-                .requestMatchers("/playlist/**").permitAll() 
                 .requestMatchers(HttpMethod.POST, "/playlist/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/playlist/**").permitAll()
 

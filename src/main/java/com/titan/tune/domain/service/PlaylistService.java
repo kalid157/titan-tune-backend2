@@ -43,10 +43,13 @@ public class PlaylistService {
         return playlistMapper.toDto(playlist);
     }
 
+    // ⭐ MÉTHODE SÉCURISÉE POUR L'AJOUT
+    @Transactional
     public void addSong(String playlistId, String songId) {
         Playlist playlist = playlistRepository.findById(playlistId)
-                .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable"));
+                .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable avec l'ID : " + playlistId));
         
+        // Sécurité : on vérifie que la liste n'est pas null
         if (playlist.getSongIds() == null) {
             playlist.setSongIds(new ArrayList<>());
         }
@@ -54,6 +57,7 @@ public class PlaylistService {
         if (playlist.getSongIds().contains(songId)) {
             throw new BusinessException("Chanson déjà dans la playlist.");
         }
+        
         playlist.getSongIds().add(songId);
         playlistRepository.save(playlist);
     }
@@ -77,7 +81,6 @@ public class PlaylistService {
         return songRepository.findAllById(playlist.getSongIds());
     }
 
-    //  AJOUT DE @Transactional ICI
     @Transactional(readOnly = true)
     public PlaylistDTO getPlaylistById(String id) {
         Playlist playlist = playlistRepository.findById(id)
