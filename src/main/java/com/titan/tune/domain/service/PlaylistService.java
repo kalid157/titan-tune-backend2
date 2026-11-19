@@ -11,7 +11,7 @@ import com.titan.tune.domain.repository.PlaylistRepository;
 import com.titan.tune.domain.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +23,7 @@ public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final PlaylistMapper playlistMapper;
     private final SongRepository songRepository; // ⭐ Ajouté pour récupérer les chansons
-
+    @Transactional(readOnly = true)
     public List<PlaylistDTO> getAllPlaylists() {
         return playlistRepository.findAll().stream()
                 .map(playlistMapper::toDto)
@@ -75,5 +75,11 @@ public class PlaylistService {
         }
         
         return songRepository.findAllById(playlist.getSongIds());
+    }
+
+        public PlaylistDTO getPlaylistById(String id) {
+        Playlist playlist = playlistRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Playlist introuvable"));
+        return playlistMapper.toDto(playlist);
     }
 }

@@ -1,5 +1,6 @@
 package com.titan.tune.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // IMPORT AJOUTÉ
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -19,11 +20,12 @@ public class Playlist {
     private String clientTrackingId;
     private LocalDateTime createdAt;
 
-    //  Permet de stocker une liste d'IDs de chansons dans la table playlist_songs
+    // AJOUT DE @JsonIgnore ICI
+    @JsonIgnore 
     @ElementCollection
     @CollectionTable(name = "playlist_songs", joinColumns = @JoinColumn(name = "playlist_id"))
     @Column(name = "song_tracking_id")
-    @Builder.Default //  Important avec Lombok pour éviter le NullPointerException
+    @Builder.Default 
     private List<String> songIds = new ArrayList<>();
 
     @PrePersist
